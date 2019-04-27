@@ -2,6 +2,7 @@ let paratrooperX = 50, paratrooperY = 20, paratrooperW = 20, paratrooperH = 20;
 let boatX = 10, boatY = 700, boatW = 80, boatH = 10;
 let speed = 3;
 let score = 0;
+let msg = 'score: '+score;
 
 function setup() {
   createCanvas(800,800);
@@ -11,21 +12,24 @@ function draw() {
   background(100);  
   ellipse(paratrooperX, paratrooperY, paratrooperW, paratrooperH);
   rect(boatX, boatY, boatW, boatH);
+  msg = 'score: '+score;
+  text(msg, 30, 30);
   paratrooper();
   boat();
-  if(isCatch()){
-    score++;
-    paratrooperY=1000;
-  }
+  checkCatch();
 }
 
 function paratrooper(){
   if(paratrooperY<height-paratrooperH){
-    paratrooperY+=speed;
+    paratrooperY+=speed-0.5;
   } else{
-    paratrooperY=10;
-    paratrooperX=random(5,width-paratrooperW);
+    dropParatrooper();
   }
+}
+
+function dropParatrooper(){
+  paratrooperY=10;
+  paratrooperX=random(5,width-paratrooperW);
 }
 
 function moveBoatLeft(){
@@ -48,12 +52,14 @@ function boat(){
   }
 }
 
-function isCatch(){
+function checkCatch(){
   if(paratrooperX >= boatX && 
-    paratrooperX+paratrooperW <= boatX+boatH &&
+    paratrooperX+paratrooperW <= boatX+boatW &&
     paratrooperY+paratrooperH >= boatY &&
     paratrooperY+paratrooperH <= boatY+boatH ){
-      return true;
+      score++;
+      dropParatrooper();
+      msg = 'Catch!'
     }
 }
 
