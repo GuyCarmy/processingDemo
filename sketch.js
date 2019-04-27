@@ -59,7 +59,6 @@ function checkCatch(){
     paratrooperY+paratrooperH <= boatY+boatH ){
       score++;
       dropParatrooper();
-      msg = 'Catch!'
     }
 }
 
